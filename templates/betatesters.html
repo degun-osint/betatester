@@ -1,0 +1,119 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+<div class="jumbotron">
+    <div class="container">
+        <h1>Beta Testers Manager</h1>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>About Beta Testers</h4>
+                </div>
+                <div class="card-body">
+                    <p>
+                        <strong>Beta Testers</strong> are users who have access to challenges before the official CTF start date.
+                        They can test challenges and report potential issues.
+                    </p>
+                    <p>
+                        Technically, Beta Testers are users with an administrator role but without access to the admin panel.
+                        They can view and solve challenges, but cannot modify the CTF configuration.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Add a Beta Tester</h4>
+                </div>
+                <div class="card-body">
+                    <form id="add-form" method="POST" action="{{ url_for('betatester.add_betatester') }}">
+                        <input type="hidden" name="nonce" id="add-nonce">
+                        <div class="form-group">
+                            <label>User</label>
+                            <select class="form-control" name="user_id">
+                                {% for user in users %}
+                                    {% if not is_betatester(user.id) and user.type != "admin" %}
+                                    <option value="{{ user.id }}">{{ user.name }} ({{ user.email }})</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add to Beta Testers</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Beta Testers List</h4>
+                </div>
+                <div class="card-body">
+                    {% if betatesters %}
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in betatesters %}
+                            <tr>
+                                <td>{{ user.id }}</td>
+                                <td>{{ user.name }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>
+                                    <form class="remove-form" method="POST" action="{{ url_for('betatester.remove_betatester') }}">
+                                        <input type="hidden" class="remove-nonce" name="nonce">
+                                        <input type="hidden" name="user_id" value="{{ user.id }}">
+                                        <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <div class="alert alert-info">
+                        No Beta Testers have been designated yet.
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Script to automatically add nonce to forms -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Add nonce to add form
+    document.getElementById('add-nonce').value = init.csrfNonce;
+    
+    // Add nonce to all remove forms
+    var removeNonces = document.getElementsByClassName('remove-nonce');
+    for (var i = 0; i < removeNonces.length; i++) {
+        removeNonces[i].value = init.csrfNonce;
+    }
+});
+</script>
+{% endblock %}
