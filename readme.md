@@ -2,6 +2,12 @@
 
 A plugin for CTFd that allows administrators to designate certain users as beta testers who can access challenges before the official CTF start time.
 
+## Support the Developer
+
+If you find this plugin useful for your CTF events, consider supporting the developer:
+
+<a href='https://ko-fi.com/D1D11CYJEY' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi1.png?v=3' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+
 ## Overview
 
 This plugin was originally developed for [Oscar Zulu](https://oscarzulu.org) to facilitate challenge testing before competitions begin, and is now being offered to the broader CTF creator community.
@@ -63,12 +69,6 @@ The plugin works by:
 ## License
 
 This project is licensed under the GPLv3 License.
-
-## Support the Developer
-
-If you find this plugin useful for your CTF events, consider supporting the developer:
-
-<a href='https://ko-fi.com/D1D11CYJEY' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi1.png?v=3' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
 
 ## Contributing
 
